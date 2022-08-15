@@ -1,3 +1,11 @@
+  const checkbox = document.getElementById("checkbox");
+  checkbox.addEventListener("change", () => {
+    // change the theme
+    document.body.classList.toggle('dark');
+  })    
+    
+    
+    
     let form = `<div>
       <div class="">
         <div>
