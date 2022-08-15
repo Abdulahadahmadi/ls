@@ -31,10 +31,19 @@
           </div>
       </div>`;
 
+
+
     
 
-function table() {
+function table(userList) {
+    
+  let users = localStorage.getItem("details");
+  if(userList){
+    users = userList;
+  }
+
     let table = `<table id="users-table" class="table">
+    
     <div class="flex flex-col justify-start ">
         <div id="alert-border-1" class="flex justify-center items-center w-2/6 p-3 mb-4 bg-blue-100 border-t-4 border-blue-500 dark:bg-blue-200" role="alert">
         <svg class="flex-shrink-0 w-5 h-5 text-blue-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
@@ -75,14 +84,6 @@ function table() {
                   </div>
                 </div>
               
-
-              <span id="badge-dismiss-default" class="inline-flex items-center py-1 px-2 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded dark:bg-blue-200 dark:text-blue-800">
-                Default
-                <button type="button" class="inline-flex items-center p-0.5 ml-2 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-300 dark:hover:text-blue-900" data-dismiss-target="#badge-dismiss-default" aria-label="Remove">
-                    <svg aria-hidden="true" class="w-3.5 h-3.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    <span class="sr-only">Remove badge</span>
-                </button>
-              </span>
           </div>
           <!-- end of search bar -->
 
@@ -113,7 +114,7 @@ function table() {
               
               <select
                 id="age-input"
-                onchange="filterAge()"
+                onchange="ageFilter()"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-md  rounded-r-lg border-l-gray-100 dark:border-l-gray-700 border-l-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
                 <option selected="" disabled=""></option>
@@ -124,7 +125,7 @@ function table() {
               </select>
             </div>
             <span id="badge-dismiss-default" class="inline-flex items-center py-1 px-2 mr-2 text-sm font-medium text-blue-800 bg-blue-100 rounded dark:bg-blue-200 dark:text-blue-800">
-                Default
+                <span id="badge"></span>
                 <button type="button"  class="inline-flex items-center p-0.5 ml-2 text-sm text-blue-400 bg-transparent rounded-sm hover:bg-blue-200 hover:text-blue-900 dark:hover:bg-blue-300 dark:hover:text-blue-900" data-dismiss-target="#badge-dismiss-default" aria-label="Remove">
                     <svg aria-hidden="true" class="w-3.5 h-3.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     <span class="sr-only">Remove badge</span>
@@ -161,10 +162,18 @@ function getData(){
         setData();
     };
 };
+
+// set data 
 function setData() {
     localStorage.setItem("details", JSON.stringify(details));
     
 };
+
+// upate badge
+function updateBadge() {
+  let badge = document.getElementById("badge");
+  badge.innerHTML = details.length;
+}
 
 // Age filter function
 function ageFilter(){
@@ -172,29 +181,34 @@ function ageFilter(){
   let ageInput = document.getElementById("age-input");
   let age = ageInput.value;
   let ageFilter = [];
-  if(age == "one"){
+  if(age === "one"){
     ageFilter = details.filter(function(item){
       return item.age >= 12 && item.age <= 18;
     });
-  } else if(age == "two"){
+  } else if(age === "two"){
     ageFilter = details.filter(function(item){
       return item.age >= 18 && item.age <= 45;
     });
   }
-  else if(age == "three"){
+  else if(age === "three"){
     ageFilter = details.filter(function(item){
       return item.age >= 45 && item.age <= 60;
     });
-  } else if(age == "four"){
+  } else if(age === "four"){
     ageFilter = details.filter(function(item){
       return item.age >= 60;
     });
   }
   table(ageFilter);
   ageBadge.innerHTML = `Ages between: ${ageFilter.length}`;
+  console.log(ageFilter);
 
 
 }
+
+window.ageFilter = ageFilter;
+
+
 
 function save() {
     let name = document.getElementById("name");
@@ -207,7 +221,6 @@ function save() {
     
 
     if(name.value == "" || email.value == "" || age.value == "" || address.value == ""){
-      danger.style.display = "block";
     }
     else{
         setTimeout(() => {
@@ -221,7 +234,6 @@ function save() {
     }
 
     setTimeout(() => {
-      danger.style.display = "none";
       success.style.display = "none";
     }, 4000);
 
