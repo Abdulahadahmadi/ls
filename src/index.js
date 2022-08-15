@@ -42,7 +42,7 @@ function table(userList) {
     users = userList;
   }
 
-    let table = `<table id="users-table" class="table">
+    let table = `<table id="users-table" class="table dark:text-white">
     
     <div class="flex flex-col justify-start ">
         <div id="alert-border-1" class="flex justify-center items-center w-2/6 p-3 mb-4 bg-blue-100 border-t-4 border-blue-500 dark:bg-blue-200" role="alert">
@@ -57,7 +57,7 @@ function table(userList) {
         </div>
 
       </div>
-  <thead class="bg-gray-300">
+  <thead class="bg-gray-300 dark:bg-gray-600 dar">
     <tr>
       <th class="">NO</th>
       <th class="">Name</th>
