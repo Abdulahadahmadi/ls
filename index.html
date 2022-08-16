@@ -12,15 +12,29 @@
     <link rel="stylesheet" href="./src/assets/styles/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.2/dist/flowbite.min.css" />
+    <link href="/public/style.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <script>
+        tailwind.config = {
+        darkMode: 'class',
+            theme: {
+                extend: {
+                colors: {
+                    clifford: '#da373d',
+                }
+                }
+            }
+            }
+        </script>
     
 </head>
 
 <body>
 
     <div class="theme-switcher">
-        <input type="checkbox" class="checkbox" id="checkbox" />
+        <input type="checkbox" class="checkbox"  id="checkbox" />
         <label for="checkbox" class="label">
         <i class="fas fa-moon"></i>
         <i class="fas fa-sun"></i>

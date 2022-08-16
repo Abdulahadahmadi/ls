@@ -1,9 +1,31 @@
   const checkbox = document.getElementById("checkbox");
   checkbox.addEventListener("change", () => {
     // change the theme
-    document.body.classList.toggle('dark');
+    const theme = document.body.classList.toggle('dark');
+
+     localStorage.setItem("theme", theme?"dark":"light");
+    //  console.log(theme?"dark":"light");
+    //  console.log(checkbox.checked)
+   
   })    
     
+
+
+  const checkTheme = ()=> {
+    const checkbox = document.getElementById("checkbox");
+    if (localStorage.getItem("theme") == "dark") {
+      document.body.classList.add('dark');
+      checkbox.checked = true;
+    } else {
+      checkbox.checked = false;
+      document.body.classList.remove('dark');
+    }
+    }
+
+    checkTheme();
+
+
+  
     
     
     let form = `<div>
@@ -12,7 +34,7 @@
           <h1 class="text-3xl my-2 text-center font-bold">Register</h1>
         </div>  
             <label for="name">Name</label>
-            <input type="text" required class="flex ring-1 w-full px-2 py-2 rounded-md" id="name" aria-describedby="emailHelp" placeholder="Enter Your Name">
+            <input type="text" required class="flex ring-1 w-full px-2 py-2 rounded-md placeholder:dark:text-gray-800" id="name" aria-describedby="emailHelp" placeholder="Enter Your Name">
           </div>
           <div class="form-group mt-3">
             <label for="email">Email</label>
@@ -42,7 +64,7 @@ function table(userList) {
     users = userList;
   }
 
-    let table = `<table id="users-table" class="table dark:text-white">
+    let table = `<table id="users-table" class="table ">
     
     <div class="flex flex-col justify-start ">
         <div id="alert-border-1" class="flex justify-center items-center w-2/6 p-3 mb-4 bg-blue-100 border-t-4 border-blue-500 dark:bg-blue-200" role="alert">
@@ -57,9 +79,9 @@ function table(userList) {
         </div>
 
       </div>
-  <thead class="bg-gray-300 dark:bg-gray-600 dar">
-    <tr>
-      <th class="">NO</th>
+  <thead class="bg-gray-500 dark:bg-gray-800 ">
+    <tr class="text-white dark:text-white">
+      <th>NO</th>
       <th class="">Name</th>
       <th class="">Email</th>
       <th class="">Age</th>
@@ -134,16 +156,16 @@ function table(userList) {
           </div>
           <!-- end of age filter -->
           </div>
-  <tbody>`;
+  <tbody class="text-black dark:text-white">`;
     for (let i = 0; i < details.length; i++){
         table = table + `<tr>
-      <td>${i + 1}</td>
-      <td>${details[i].name}</td>
-      <td>${details[i].email}</td>
-      <td>${details[i].age}</td>
-      <td>${details[i].address}</td>
-      <td><button type="button" class=" outline outline-blue-300 hover:bg-green-600 hover:text-white px-4 py-1 rounded-md shadow-md" onclick="edit(${i})">Edit</button></td>
-      <td><button type="button" class="outline outline-blue-300 hover:bg-red-700 hover:text-white px-4 py-1 rounded-md shadow-md" onclick="deleteData(${i})">Delete</button></td>
+      <td class="text-black dark:text-white">${i + 1}</td>
+      <td class="text-black dark:text-white">${details[i].name}</td>
+      <td class="text-black dark:text-white">${details[i].email}</td>
+      <td class="text-black dark:text-white">${details[i].age}</td>
+      <td class="text-black dark:text-white">${details[i].address}</td>
+      <td ><button type="button" class=" outline outline-blue-300 hover:bg-green-600 hover:text-white px-4 py-1 rounded-md shadow-md text-black dark:text-white" onclick="edit(${i})">Edit</button></td>
+      <td class="text-black dark:text-white"><button type="button" class="outline outline-blue-300 hover:bg-red-700 hover:text-white px-4 py-1 rounded-md shadow-md" onclick="deleteData(${i})">Delete</button></td>
     </tr> `;
     };
     table = table+`</tbody>
@@ -353,20 +375,20 @@ function update(index) {
 
 
 // on reload 
-document.getElementById('name').value = getSavedValue('name');
-document.getElementById('email').value = getSavedValue('email');
-document.getElementById('age').value = getSavedValue('age');
-document.getElementById('address').value = getSavedValue('address');
+// document.getElementById('name').value = getSavedValue('name');
+// document.getElementById('email').value = getSavedValue('email');
+// document.getElementById('age').value = getSavedValue('age');
+// document.getElementById('address').value = getSavedValue('address');
 
-function savedValue(e) {
-  let id = e.id;
-  let val = e.value;
-  localStorage.setItem(id, val);
-}
+// function savedValue(e) {
+//   let id = e.id;
+//   let val = e.value;
+//   localStorage.setItem(id, val);
+// }
 
-function getSavedValue(v) {
-  if(!localStorage.getItem(v)) {
-    return "";
-}
-return localStorage.getItem(v);
-}
+// function getSavedValue(v) {
+//   if(!localStorage.getItem(v)) {
+//     return "";
+// }
+// return localStorage.getItem(v);
+// }
